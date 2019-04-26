@@ -23,6 +23,11 @@ export default class App extends React.Component {
     this.state = {
       todoList 
     }
+    console.log(window.localStorage.clear());
+    this.state.todoList.map(task => {
+       localStorage.setItem(task.id,task)
+    })
+    console.log('Start',window.localStorage)
   }
   addTask = task => {
     this.setState({
@@ -31,6 +36,8 @@ export default class App extends React.Component {
         {task:task,id:Date.now(),completed:false}
       ]
     });
+    localStorage.setItem(Date.now(),{task:task,id:Date.now(),completed:false})
+    console.log('addTask',window.localStorage)
   }
 
   taskComplete = id => {
@@ -42,11 +49,13 @@ export default class App extends React.Component {
   }
   clearCompleted = e =>{
     e.preventDefault();
-    console.log(this.state)
+    this.state.todoList.filter(task => task.completed ? localStorage.removeItem(task.id):false) 
     this.setState({
         todoList : this.state.todoList.filter(task =>!task.completed)
-  })
-}
+    })
+    
+    console.log('clearCompleted',window.localStorage)
+  }
   //https://codesandbox.io/s/8yoxox4xx0
   render() {
     return (

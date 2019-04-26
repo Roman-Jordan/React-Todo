@@ -6,17 +6,18 @@ import React from 'react';
 export default class ToDoForm extends React.Component{
     constructor(props){
         super()
-        this.state = {
-            superState : props.state,
+        this.state = { 
             addTask: ""
         }
         this.props = props;
     }   
 
     inputChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        let key = e.target.name;
+        let value = e.target.value;
+        this.setState({[key]: value})
+        localStorage.setItem(key,value);
+        console.log(value,localStorage)
     }
 
     taskSubmit = e =>{
